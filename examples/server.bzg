@@ -1,0 +1,18 @@
+/*
+    HTTP Server
+    Author: Jofel Batutay (Bonezegei)
+    Date: May 21, 2026
+*/
+
+// include the library after Installation (" bzg install http ")
+include("lib/http.bzg");
+
+// param1 = port
+// param2 = IP (optional)
+var http = createHTTPServer(8080, "127.0.0.1");
+
+//location of the files 
+http.resources("html");
+
+// this is an infinite loop for server handling client
+http.run();
