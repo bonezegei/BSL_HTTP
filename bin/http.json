@@ -5,7 +5,7 @@
     "http": {
       "info": "http object",
       "params": "port",
-      "req_params": 1
+      "req_params": 1,
       "methods": {
         "get": {
           "info": "HTTP GET Callback",
@@ -41,6 +41,16 @@
         "onDisconnect": {
           "info": "Websocket Client onDisconnect Callback",
           "params": "clientID ",
+          "req_params": 1
+        },
+        "send": {
+          "info": "Websocket send data to client",
+          "params": "clientID, message/data",
+          "req_params": 2
+        },
+        "sendAll": {
+          "info": "Websocket send data to all clients",
+          "params": "message/data",
           "req_params": 1
         },
     
