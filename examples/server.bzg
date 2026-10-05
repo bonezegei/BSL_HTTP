@@ -9,37 +9,23 @@ include("lib/http.bzg");
 
 var server = http(8000);
 
-//print(server);
-
 server.get = function (path, data){
     //print("get loc:" + path + "data:"+ data);
     print("get loc:" + path );
 
     if(path == "/"){
-       server.sendResponse("Server 3001", "text/html", 200);
+       server.sendResponse("HTTP Server 8000", "text/html", 200);
 
-    }
-    else if(path == "/upload"){
-        server.sendFile("file.html");
-        print("upload");
-    }
-    else if(path == "/upload-endpoint"){
-        //server.sendFile("file.html");
-        var name = server.getPost("name");
-        
-        print(name.size);
-        server.sendFile("file.html");
     }
     else{
+        server.sendResponse("Not Found", "text/html", 404);
     }
-
-    //print(server.getHeader("user-agent"));
 
     gc();
 };
 
 // ==========================================
-// B. WEBSOCKET (WS) EVENT HANDLERS
+// WEBSOCKET (WS) EVENT HANDLERS
 // ==========================================
 
 // Triggered when a client successfully connects via wss://
