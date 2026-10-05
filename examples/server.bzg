@@ -1,18 +1,70 @@
 /*
-    HTTP Server
+    HTTP and Websocket Server
     Author: Jofel Batutay (Bonezegei)
-    Date: May 21, 2026
+    Date: October 6, 2026
 */
 
 // include the library after Installation (" bzg install http ")
 include("lib/http.bzg");
 
-// param1 = port
-// param2 = IP (optional)
-var http = createHTTPServer(8080, "127.0.0.1");
+var server = http(8000);
 
-//location of the files 
-http.resources("html");
+//print(server);
 
-// this is an infinite loop for server handling client
-http.run();
+server.get = function (path, data){
+    //print("get loc:" + path + "data:"+ data);
+    print("get loc:" + path );
+
+    if(path == "/"){
+       server.sendResponse("Server 3001", "text/html", 200);
+
+    }
+    else if(path == "/upload"){
+        server.sendFile("file.html");
+        print("upload");
+    }
+    else if(path == "/upload-endpoint"){
+        //server.sendFile("file.html");
+        var name = server.getPost("name");
+        
+        print(name.size);
+        server.sendFile("file.html");
+    }
+    else{
+    }
+
+    //print(server.getHeader("user-agent"));
+
+    gc();
+};
+
+// ==========================================
+// B. WEBSOCKET (WS) EVENT HANDLERS
+// ==========================================
+
+// Triggered when a client successfully connects via wss://
+server.onConnect = function (clientId) {
+    print("WebSocket connected! Client ID: " + clientId);
+    
+    // Send a welcome message to this specific client
+    server.send(clientId, "Welcome to the Secure WebSocket server!");
+};
+
+// Triggered when a client sends a message
+server.onData = function (message, clientId) {
+    print("Received from Client " + clientId + ": " + message);
+
+    // Echo the message back to the sender
+    //server.send(clientId, "Echo: " + message);
+    //server.send(clientId,  message);
+
+    // Or broadcast it to everyone connected
+    server.sendAll("User " + clientId + " says: " + message);
+};
+
+// Triggered when a client disconnects
+server.onDisconnect = function (clientId) {
+    print("WebSocket disconnected! Client ID: " + clientId);
+};
+
+server.run();
