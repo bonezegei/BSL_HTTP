@@ -9,6 +9,11 @@ include("lib/http.bzg");
 
 var server = http(8000);
 
+// set server to listen to 127.0.0.1 only. discards other connections from other IPs
+// server.allowLocalOnly();
+
+print("http server on http://localhost:8000");
+
 server.get = function (path, data){
     //print("get loc:" + path + "data:"+ data);
     print("get loc:" + path );
